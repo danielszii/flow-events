@@ -1,3 +1,3 @@
 export type CreateEventoOutputDTO = {
-    id: number;
+  id: string;
 }
