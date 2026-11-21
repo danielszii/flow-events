@@ -4,14 +4,11 @@ import { DeleteEvento } from "../../aplicacao/usecase/evento/DeleteEvento";
 import { GetEvento } from "../../aplicacao/usecase/evento/GetEvento";
 import { UpdateEvento } from "../../aplicacao/usecase/evento/UpdateEvento";
 import { EventoRepositorioMysql } from "../../infra/bd/mysql/EventoRepositorioMysql";
-import { EventoRepositorioPg } from "../../infra/bd/pg/EventoRepositorioPg";
 import { EventoControle } from "../../infra/web/express/controle/EventoControle";
 
 const eventoRepositorio = new EventoRepositorioMysql();
 
-const eventoRepositorioPg = new EventoRepositorioPg();
-
-const createEvento = new CreateEvento(eventoRepositorioPg);
+const createEvento = new CreateEvento(eventoRepositorio);
 const listEvento = new ListEvento(eventoRepositorio);
 const deleteEvento = new DeleteEvento(eventoRepositorio);
 const getEvento = new GetEvento(eventoRepositorio);

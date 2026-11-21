@@ -1,11 +1,23 @@
 import { Router } from "express";
+import { EventoControle } from "../controle/EventoControle";
+import { LoteControle } from "../controle/LoteControle";
+import { UsuarioControle } from "../controle/UsuarioControle";
+import { createEventoRoutes } from "./EventoRoutes";
+import { createLoteRoutes } from "./LoteRoutes";
+import { createUsuarioRoutes } from "./UsuarioRoutes";
 
-import EventoRoutes from "./EventoRoutes";
-import UsuarioRoutes from "./UsuarioRoutes";
+type RouteControllers = {
+  eventoControle: EventoControle;
+  loteControle: LoteControle;
+  usuarioControle: UsuarioControle;
+};
 
-const router = Router();
+export function createRoutes(controllers: RouteControllers): Router {
+  const router = Router();
 
-router.use(EventoRoutes);
-router.use(UsuarioRoutes);
+  router.use(createEventoRoutes(controllers.eventoControle));
+  router.use(createLoteRoutes(controllers.loteControle));
+  router.use(createUsuarioRoutes(controllers.usuarioControle));
 
-export default router;
+  return router;
+}

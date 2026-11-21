@@ -34,6 +34,10 @@ export class UsuarioControle {
   public async removerUsuario(req: Request, res: Response) {
     try {
       const id = req.params.id;
+      if (typeof id !== "string") {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
       const result = await this.deleteUsuario.execute({ id });
       res.status(200).json(result);
     } catch (error) {
@@ -44,6 +48,10 @@ export class UsuarioControle {
   public async buscarUsuarioPorId(req: Request, res: Response) {
     try {
       const id = req.params.id;
+      if (typeof id !== "string") {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
       const usuario = await this.getUsuario.execute({ id });
       if (!usuario) {
         res.status(404).json({ error: 'Usuário não encontrado' });

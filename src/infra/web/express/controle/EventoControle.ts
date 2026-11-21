@@ -36,6 +36,10 @@ export class EventoControle {
   public async removerEvento(req: Request, res: Response) {
     try {
       const id = req.params.id;
+      if (typeof id !== "string") {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
       const result = await this.deleteEvento.execute({ id });
       res.status(200).json(result);
     } catch (error) {
@@ -46,6 +50,10 @@ export class EventoControle {
   public async buscarEventoPorId(req: Request, res: Response) {
     try {
       const id = req.params.id;
+      if (typeof id !== "string") {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
       const evento = await this.getEvento.execute({ id });
       if (!evento) {
         res.status(404).json({ error: 'Evento não encontrado' });
@@ -60,6 +68,10 @@ export class EventoControle {
   public async atualizarEvento(req: Request, res: Response) {
     try {
       const id = req.params.id;
+      if (typeof id !== "string") {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
       const { titulo, descricao, data_hora_inicio, data_hora_fim, limite_ingressos_cpf } = req.body;
       const result = await this.updateEvento.execute({
         id, titulo, descricao, data_hora_inicio, data_hora_fim, limite_ingressos_cpf
