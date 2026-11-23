@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsx --test test/lote.test.ts test/inscricao.test.ts",
+    "test": "tsx --test test/lote.test.ts test/inscricao.test.ts test/evento-publicacao.test.ts test/reservar-inscricao.test.ts test/inscricao-processamento.test.ts test/cancelar-inscricao.test.ts test/repositorios-memoria.test.ts",
     "dev": "tsx watch src/server.ts"
   },
   "keywords": [],

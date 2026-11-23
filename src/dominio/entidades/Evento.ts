@@ -1,3 +1,5 @@
+import { EventoEstadoInvalidoError } from "../erros/EventoEstadoInvalidoError";
+
 export enum EstadoEvento {
   RASCUNHO = 'RASCUNHO',
   PUBLICADO = 'PUBLICADO',
@@ -51,7 +53,7 @@ export class Evento {
 
   public publicar(): void {
     if (this.props.estado !== EstadoEvento.RASCUNHO) {
-      throw new Error('Apenas eventos em rascunho podem ser publicados');
+      throw new EventoEstadoInvalidoError('Apenas eventos em rascunho podem ser publicados');
     }
     this.props.estado = EstadoEvento.PUBLICADO;
   }
