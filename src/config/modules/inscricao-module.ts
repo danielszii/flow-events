@@ -3,19 +3,20 @@ import { CancelarInscricao } from "../../aplicacao/usecase/inscricao/CancelarIns
 import { ConfirmarInscricao } from "../../aplicacao/usecase/inscricao/ConfirmarInscricao";
 import { ExpirarInscricoesPendentes } from "../../aplicacao/usecase/inscricao/ExpirarInscricoesPendentes";
 import { PromoverFilaEspera } from "../../aplicacao/usecase/inscricao/PromoverFilaEspera";
-import { EventoRepositorioMysql } from "../../infra/bd/mysql/EventoRepositorioMysql";
-import { LoteRepositorioMysql } from "../../infra/bd/mysql/LoteRepositorioMysql";
-import { UsuarioRepositorioMysql } from "../../infra/bd/mysql/UsuarioRepositorioMysql";
-import { InscricaoRepositorioMemoria } from "../../infra/bd/memoria/InscricaoRepositorioMemoria";
-import { FilaEsperaRepositorioMemoria } from "../../infra/bd/memoria/FilaEsperaRepositorioMemoria";
+import { EventoRepositorioPostgres } from "../../infra/bd/postgres/EventoRepositorioPostgres";
+import { LoteRepositorioPostgres } from "../../infra/bd/postgres/LoteRepositorioPostgres";
+import { UsuarioRepositorioPostgres } from "../../infra/bd/postgres/UsuarioRepositorioPostgres";
+import { InscricaoRepositorioPostgres } from "../../infra/bd/postgres/InscricaoRepositorioPostgres";
+import { FilaEsperaRepositorioPostgres } from "../../infra/bd/postgres/FilaEsperaRepositorioPostgres";
 import { InscricaoControle } from "../../infra/web/express/controle/InscricaoControle";
 import { AgendadorExpiracaoInscricoes } from "../../infra/worker/AgendadorExpiracaoInscricoes";
 
-const usuarioRepositorio = new UsuarioRepositorioMysql();
-const eventoRepositorio = new EventoRepositorioMysql();
-const loteRepositorio = new LoteRepositorioMysql();
-const inscricaoRepositorio = new InscricaoRepositorioMemoria(usuarioRepositorio);
-const filaEsperaRepositorio = new FilaEsperaRepositorioMemoria();
+const usuarioRepositorio = new UsuarioRepositorioPostgres();
+const eventoRepositorio = new EventoRepositorioPostgres();
+const loteRepositorio = new LoteRepositorioPostgres();
+const inscricaoRepositorio = new InscricaoRepositorioPostgres();
+const filaEsperaRepositorio = new FilaEsperaRepositorioPostgres();
+
 const promoverFilaEspera = new PromoverFilaEspera(
   inscricaoRepositorio,
   filaEsperaRepositorio,
@@ -32,6 +33,7 @@ const reservarInscricao = new ReservarInscricao(
   filaEsperaRepositorio,
   promoverFilaEspera,
 );
+
 export const confirmarInscricao = new ConfirmarInscricao(inscricaoRepositorio);
 export const cancelarInscricao = new CancelarInscricao(inscricaoRepositorio, promoverFilaEspera);
 export const expirarInscricoesPendentes = new ExpirarInscricoesPendentes(
